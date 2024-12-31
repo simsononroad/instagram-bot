@@ -1,0 +1,124 @@
+[
+    {
+        "label": "Client",
+        "importPath": "instagrapi",
+        "description": "instagrapi",
+        "isExtraImport": true,
+        "detail": "instagrapi",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "login_data",
+        "description": "login_data",
+        "isExtraImport": true,
+        "detail": "login_data",
+        "documentation": {}
+    },
+    {
+        "label": "Bot",
+        "importPath": "instabot",
+        "description": "instabot",
+        "isExtraImport": true,
+        "detail": "instabot",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "rich.console",
+        "description": "rich.console",
+        "isExtraImport": true,
+        "detail": "rich.console",
+        "documentation": {}
+    },
+    {
+        "label": "sqlite3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "username_ig",
+        "kind": 5,
+        "importPath": "login_data",
+        "description": "login_data",
+        "peekOfCode": "username_ig = \"simson_on_the_road\"\npassword_ig = \"Utalomazinstat01\"",
+        "detail": "login_data",
+        "documentation": {}
+    },
+    {
+        "label": "password_ig",
+        "kind": 5,
+        "importPath": "login_data",
+        "description": "login_data",
+        "peekOfCode": "password_ig = \"Utalomazinstat01\"",
+        "detail": "login_data",
+        "documentation": {}
+    },
+    {
+        "label": "Like_post",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def Like_post(hashtag):\n    medias = client.hashtag_medias_recent(hashtag, 20)\n    total_liked_post = int()\n    for i, media in enumerate(medias):\n        client.media_like(media.id)\n        print(f\"Kedvelt posztok száma: {i+1} a hashtagnek {hashtag}\")\n        total_liked_post +=1\n    print(f\"Kedvelt posztok száma :{total_liked_post}\")\n    menu()\n    return total_liked_post",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "send_direct_message",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def send_direct_message(instagram_name, message):\n    send_to = client.user_id_from_username(username=instagram_name)\n    client.direct_send(text=message, user_ids=[send_to])\n    print(f\"Üzenet: {message} elküldve {instagram_name}-nak/nek\")\n    con = sqlite3.connect(\"data.db\")\n    cur = con.cursor()\n    ins = cur.execute(f\"insert into emberek (name) values ('{instagram_name}')\")\n    con.commit()\n    menu()\ndef menu():",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "menu",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def menu():\n    global send_ig_message_name\n    try:\n        menu = int(console.input(\"[bold cyan]Postokat bekedvelni(1)[/bold cyan] || [bold cyan]Üzenet küldése(2)[/bold cyan] || [bold red]Kilépés(3)[/bold red]: \"))\n    except:\n        console.print(\"ERROR: Számot írj be!\", style=\"bold red\")\n        menu()\n    if menu == 1:\n        ht = input(\"Kedveld be ezeket azt a post-ot amiben szerepel a hashtag\\n>>> #\")\n        Like_post(ht)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "con",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "con = sqlite3.connect(\"data.db\")\ncur = con.cursor()\ntry:\n    cur.execute(\"CREATE TABLE emberek(name)\")\nexcept:\n    pass\nconsole = Console()\nconsole.print(\"Menu\", style=\"black bold\")\nsend_ig_message_name = \"\"\ntry:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "cur",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "cur = con.cursor()\ntry:\n    cur.execute(\"CREATE TABLE emberek(name)\")\nexcept:\n    pass\nconsole = Console()\nconsole.print(\"Menu\", style=\"black bold\")\nsend_ig_message_name = \"\"\ntry:\n    my_bot = Bot()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "console",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "console = Console()\nconsole.print(\"Menu\", style=\"black bold\")\nsend_ig_message_name = \"\"\ntry:\n    my_bot = Bot()\n    my_bot.login(username=username_ig, password=password_ig)\nexcept:\n    console.print(\"ERROR: Sikertelen bejelentkezés az instabot-ba\", style=\"bold red\")\n    client = Client()\n    client.login(username_ig, password_ig)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "send_ig_message_name",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "send_ig_message_name = \"\"\ntry:\n    my_bot = Bot()\n    my_bot.login(username=username_ig, password=password_ig)\nexcept:\n    console.print(\"ERROR: Sikertelen bejelentkezés az instabot-ba\", style=\"bold red\")\n    client = Client()\n    client.login(username_ig, password_ig)\n    console.print(\"SUCCESSFUL: Sikeres bejelentkezés az instagrapi-ba\", style=\"bold green\")\ndef Like_post(hashtag):",
+        "detail": "main",
+        "documentation": {}
+    }
+]

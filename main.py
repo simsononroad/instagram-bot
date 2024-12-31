@@ -2,6 +2,16 @@ from instagrapi import Client
 from login_data import *
 from instabot import Bot
 from rich.console import *
+import sqlite3
+
+con = sqlite3.connect("data.db")
+cur = con.cursor()
+try:
+    cur.execute("CREATE TABLE emberek(name)")
+
+except:
+    pass
+
 
 console = Console()
 console.print("Menu", style="black bold")
@@ -31,7 +41,12 @@ def send_direct_message(instagram_name, message):
     send_to = client.user_id_from_username(username=instagram_name)
     client.direct_send(text=message, user_ids=[send_to])
     print(f"Üzenet: {message} elküldve {instagram_name}-nak/nek")
+    con = sqlite3.connect("data.db")
+    cur = con.cursor()
+    ins = cur.execute(f"insert into emberek (name) values ('{instagram_name}')")
+    con.commit()
     menu()
+    
 
 def menu():
     global send_ig_message_name
@@ -40,11 +55,18 @@ def menu():
     except:
         console.print("ERROR: Számot írj be!", style="bold red")
         menu()
-    print(menu)
     if menu == 1:
         ht = input("Kedveld be ezeket azt a post-ot amiben szerepel a hashtag\n>>> #")
         Like_post(ht)
     elif menu == 2:
+        con = sqlite3.connect("data.db")
+        cur = con.cursor()
+        ins = cur.execute(f"select name FROM emberek")
+        emberek = cur.fetchall()
+        console.print("Eddig ezekkel az emberekkel beszéltél:", style="bold black on white")
+        for i in emberek:
+            i = i[0]
+            console.print(f"-    {i}", style="bold black on white")
         if send_ig_message_name == "":
             ig_name = input("Írd be a felhasználó nevét\n>>>")
             send_ig_message_name = ig_name
@@ -66,6 +88,8 @@ def menu():
                 message = input(f"Írd be az üzenetet @{ig_name}-nak/nek\n>>>")
                 send_direct_message(ig_name, message)
 
+    else:
+        pass
 
 if __name__ == "__main__":
     menu()
