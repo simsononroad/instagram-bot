@@ -3,6 +3,7 @@ from login_data import *
 from instabot import Bot
 from rich.console import *
 import sqlite3
+import webbrowser
 
 con = sqlite3.connect("data.db")
 cur = con.cursor()
@@ -11,6 +12,9 @@ try:
 
 except:
     pass
+
+
+instagram_url = "https://instagram.com"
 
 
 console = Console()
@@ -39,19 +43,40 @@ def Like_post(hashtag):
 
 def send_direct_message(instagram_name, message):
     send_to = client.user_id_from_username(username=instagram_name)
+    print(send_to)
     client.direct_send(text=message, user_ids=[send_to])
     print(f"Üzenet: {message} elküldve {instagram_name}-nak/nek")
     con = sqlite3.connect("data.db")
     cur = con.cursor()
     ins = cur.execute(f"insert into emberek (name) values ('{instagram_name}')")
+    while True:
+        try:
+            q = int(input("Profil megnyitása böngészőben(1) || tovább a menübe(2)\n>>>"))
+        except:
+            console.print("Számot írj be!")
+            q = int(input("Profil megnyitása böngészőben(1) || tovább a menübe(2)\n>>>"))
+        if q == 1:
+            webbrowser.open(f"https://instagram.com/{instagram_name}/")
+            menu()
+            break
+        elif q == 2:
+            menu()
+            break
+        
+    
     con.commit()
     menu()
     
 
+def open_ig():
+    webbrowser.open(instagram_url)
+    menu()
+
+
 def menu():
     global send_ig_message_name
     try:
-        menu = int(console.input("[bold cyan]Postokat bekedvelni(1)[/bold cyan] || [bold cyan]Üzenet küldése(2)[/bold cyan] || [bold red]Kilépés(3)[/bold red]: "))
+        menu = int(console.input("[bold cyan]Postokat bekedvelni(1)[/bold cyan] || [bold cyan]Üzenet küldése(2)[/bold cyan] || [bold cyan]Megnyitás böngészőben.3)[/bold cyan] || [bold red]Kilépés(4)[/bold red]: "))
     except:
         console.print("ERROR: Számot írj be!", style="bold red")
         menu()
@@ -87,6 +112,10 @@ def menu():
                 send_ig_message_name = ig_name
                 message = input(f"Írd be az üzenetet @{ig_name}-nak/nek\n>>>")
                 send_direct_message(ig_name, message)
+    elif menu == 3:
+        open_ig()        
+
+
 
     else:
         pass

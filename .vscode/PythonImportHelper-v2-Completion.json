@@ -41,6 +41,15 @@
         "documentation": {}
     },
     {
+        "label": "webbrowser",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "webbrowser",
+        "description": "webbrowser",
+        "detail": "webbrowser",
+        "documentation": {}
+    },
+    {
         "label": "username_ig",
         "kind": 5,
         "importPath": "login_data",
@@ -72,7 +81,16 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def send_direct_message(instagram_name, message):\n    send_to = client.user_id_from_username(username=instagram_name)\n    client.direct_send(text=message, user_ids=[send_to])\n    print(f\"Üzenet: {message} elküldve {instagram_name}-nak/nek\")\n    con = sqlite3.connect(\"data.db\")\n    cur = con.cursor()\n    ins = cur.execute(f\"insert into emberek (name) values ('{instagram_name}')\")\n    con.commit()\n    menu()\ndef menu():",
+        "peekOfCode": "def send_direct_message(instagram_name, message):\n    send_to = client.user_id_from_username(username=instagram_name)\n    print(send_to)\n    client.direct_send(text=message, user_ids=[send_to])\n    print(f\"Üzenet: {message} elküldve {instagram_name}-nak/nek\")\n    con = sqlite3.connect(\"data.db\")\n    cur = con.cursor()\n    ins = cur.execute(f\"insert into emberek (name) values ('{instagram_name}')\")\n    while True:\n        try:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "open_ig",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def open_ig():\n    webbrowser.open(instagram_url)\n    menu()\ndef menu():\n    global send_ig_message_name\n    try:\n        menu = int(console.input(\"[bold cyan]Postokat bekedvelni(1)[/bold cyan] || [bold cyan]Üzenet küldése(2)[/bold cyan] || [bold cyan]Megnyitás böngészőben.3)[/bold cyan] || [bold red]Kilépés(4)[/bold red]: \"))\n    except:\n        console.print(\"ERROR: Számot írj be!\", style=\"bold red\")\n        menu()",
         "detail": "main",
         "documentation": {}
     },
@@ -81,7 +99,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def menu():\n    global send_ig_message_name\n    try:\n        menu = int(console.input(\"[bold cyan]Postokat bekedvelni(1)[/bold cyan] || [bold cyan]Üzenet küldése(2)[/bold cyan] || [bold red]Kilépés(3)[/bold red]: \"))\n    except:\n        console.print(\"ERROR: Számot írj be!\", style=\"bold red\")\n        menu()\n    if menu == 1:\n        ht = input(\"Kedveld be ezeket azt a post-ot amiben szerepel a hashtag\\n>>> #\")\n        Like_post(ht)",
+        "peekOfCode": "def menu():\n    global send_ig_message_name\n    try:\n        menu = int(console.input(\"[bold cyan]Postokat bekedvelni(1)[/bold cyan] || [bold cyan]Üzenet küldése(2)[/bold cyan] || [bold cyan]Megnyitás böngészőben.3)[/bold cyan] || [bold red]Kilépés(4)[/bold red]: \"))\n    except:\n        console.print(\"ERROR: Számot írj be!\", style=\"bold red\")\n        menu()\n    if menu == 1:\n        ht = input(\"Kedveld be ezeket azt a post-ot amiben szerepel a hashtag\\n>>> #\")\n        Like_post(ht)",
         "detail": "main",
         "documentation": {}
     },
@@ -90,7 +108,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "con = sqlite3.connect(\"data.db\")\ncur = con.cursor()\ntry:\n    cur.execute(\"CREATE TABLE emberek(name)\")\nexcept:\n    pass\nconsole = Console()\nconsole.print(\"Menu\", style=\"black bold\")\nsend_ig_message_name = \"\"\ntry:",
+        "peekOfCode": "con = sqlite3.connect(\"data.db\")\ncur = con.cursor()\ntry:\n    cur.execute(\"CREATE TABLE emberek(name)\")\nexcept:\n    pass\ninstagram_url = \"https://instagram.com\"\nconsole = Console()\nconsole.print(\"Menu\", style=\"black bold\")\nsend_ig_message_name = \"\"",
         "detail": "main",
         "documentation": {}
     },
@@ -99,7 +117,16 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "cur = con.cursor()\ntry:\n    cur.execute(\"CREATE TABLE emberek(name)\")\nexcept:\n    pass\nconsole = Console()\nconsole.print(\"Menu\", style=\"black bold\")\nsend_ig_message_name = \"\"\ntry:\n    my_bot = Bot()",
+        "peekOfCode": "cur = con.cursor()\ntry:\n    cur.execute(\"CREATE TABLE emberek(name)\")\nexcept:\n    pass\ninstagram_url = \"https://instagram.com\"\nconsole = Console()\nconsole.print(\"Menu\", style=\"black bold\")\nsend_ig_message_name = \"\"\ntry:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "instagram_url",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "instagram_url = \"https://instagram.com\"\nconsole = Console()\nconsole.print(\"Menu\", style=\"black bold\")\nsend_ig_message_name = \"\"\ntry:\n    my_bot = Bot()\n    my_bot.login(username=username_ig, password=password_ig)\nexcept:\n    console.print(\"ERROR: Sikertelen bejelentkezés az instabot-ba\", style=\"bold red\")\n    client = Client()",
         "detail": "main",
         "documentation": {}
     },
