@@ -76,7 +76,7 @@ def open_ig():
 def menu():
     global send_ig_message_name
     try:
-        menu = int(console.input("[bold cyan]Postokat bekedvelni(1)[/bold cyan] || [bold cyan]Üzenet küldése(2)[/bold cyan] || [bold cyan]Megnyitás böngészőben.3)[/bold cyan] || [bold red]Kilépés(4)[/bold red]: "))
+        menu = int(console.input("[bold cyan]Postokat bekedvelni(1)[/bold cyan] || [bold cyan]Üzenet küldése(2)[/bold cyan] || [bold cyan]Megnyitás böngészőben(3)[/bold cyan] || [bold red]Kilépés(4)[/bold red]: "))
     except:
         console.print("ERROR: Számot írj be!", style="bold red")
         menu()
@@ -114,9 +114,6 @@ def menu():
                 send_direct_message(ig_name, message)
     elif menu == 3:
         open_ig()        
-
-
-
     else:
         pass
 
